@@ -1,19 +1,47 @@
-plugins {
-    id 'java'
+buildscript {
+    ext {
+        springBootVersion = '2.2.6.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
-group 'org.example'
+plugins {
+    id 'org.springframework.boot' version '2.2.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+    id 'maven-publish'
+}
+
+
+group 'io.javabrains'
 version '1.0-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
 
 repositories {
     mavenCentral()
 }
 
+bootJar
+{
+    mainClassName="io.javabrains.SpringMain"
+}
+
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-test {
+test
+{
     useJUnitPlatform()
 }
